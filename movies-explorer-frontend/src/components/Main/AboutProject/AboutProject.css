@@ -1,0 +1,117 @@
+.about-project-container {
+  display: flex;
+  justify-content: center;
+}
+.about-project {
+  max-width: 1140px;
+	width: calc(100% - 2*70px);
+}
+.about-project__header {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 26px;
+  margin-top: 110px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #000000;
+}
+.article {
+  display: grid;
+  grid-template-columns: repeat(2, 550px);
+	grid-template-rows: repeat(2, 1fr);
+  gap: 26px 40px;
+  margin-top: 70px auto 0;
+  align-items: center;
+}
+.article__item {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+.article__item_top {
+  font-size: 20px;
+  line-height: 24.2px;
+}
+.scale {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 36px 1fr;
+  margin-top: 110px;
+  margin-bottom: 110px;
+}
+.scale__item {
+  text-align: center;
+  font-size: 14px;
+  line-height: 17px;
+  color: #A0A0A0;
+  margin-top: 14px;
+}
+.scale__item_top {
+  font-weight: 400;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+.scale__item_green {
+  background-color: #2BE080;
+}
+.scale__item_grey {
+  background-color: #F2F2F2;
+}
+
+@media screen and (min-width:768px) and (max-width:1279px) {
+  .about-project {
+    width: calc(100% - 2*50px);
+  }
+  .about-project__header {
+    margin-top: 90px;
+  }
+  .article {
+    gap: 22px 30px;
+    grid-template-columns: repeat(2, calc((100% - 30px)/2));
+  }
+  .scale {
+    margin-top: 93px;
+    margin-bottom: 90px;
+  }
+}
+
+@media screen and (min-width:320px) and (max-width:767px) {
+  .about-project {
+    width: calc(100% - 2*18px);
+  }
+  .about-project__header {
+    margin-top: 70px;
+    font-size: 18px;
+    padding-bottom: 28px;
+    margin-bottom: 0;
+  }
+  .article {
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    grid-template-columns: none;
+    gap: 0;
+  }
+  .article__item {
+    order: -1;
+    margin: 0;
+  }
+  .article__item:nth-child(2n) {
+    order: 0;
+  }
+  .article__item_top {
+    margin-top: 60px;
+    margin-bottom: 16px;
+  }
+  .scale {
+    margin-top: 60px;
+    margin-bottom: 93px;
+  }
+  .scale__item {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+}
