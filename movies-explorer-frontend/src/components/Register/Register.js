@@ -20,10 +20,10 @@ const Register = () => {
         <p className="register__label register__label_error">что-то пошло не так</p>
       </form>
       <button className="register__button-reg">Зарегистрироваться</button>
-      <div className="already-register">
+      <section className="already-register">
         <p className="already-register__label">Уже зарегистрированы?</p>&nbsp;
         <Link to="/signin" className="already-register__link">Войти</Link>
-      </div>
+      </section>
     </section>
   )
 }

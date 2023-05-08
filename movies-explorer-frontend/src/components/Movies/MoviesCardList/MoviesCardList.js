@@ -16,7 +16,7 @@ import img12 from "../../../images/pic12.png";
 
 const MoviesCardList = (props) => {
   return (
-    <section className="movies-card-list movies-card-list_short-bottom">
+    <ul className="movies-card-list movies-card-list_short-bottom">
       <MoviesCard img={img1} isSaved={true}/>
       <MoviesCard img={img2} isSaved={true}/>
       <MoviesCard img={img3} isSaved={false}/>
@@ -29,7 +29,7 @@ const MoviesCardList = (props) => {
       <MoviesCard img={img10} isSaved={false}/>
       <MoviesCard img={img11} isSaved={true}/>
       <MoviesCard img={img12} isSaved={false}/>
-    </section>
+    </ul>
   )
 }
 

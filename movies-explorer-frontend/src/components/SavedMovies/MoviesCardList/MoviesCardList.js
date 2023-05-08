@@ -6,11 +6,11 @@ import img3 from "../../../images/pic3.png";
 
 const MoviesCardList = () => {
   return (
-    <section className="movies-card-list movies-card-list_saved">
+    <ul className="movies-card-list movies-card-list_saved">
       <MoviesCard img={img1} isSaved={true}/>
       <MoviesCard img={img2} isSaved={true}/>
       <MoviesCard img={img3} isSaved={false}/>
-    </section>
+    </ul>
   )
 }
 

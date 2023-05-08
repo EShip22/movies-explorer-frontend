@@ -2,24 +2,24 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <div className="footer-container">
-      <footer className="footer">
+    <footer className="footer-container">
+      <section className="footer">
         <p className="footer__text">
           Учебный проект Яндекс.Практикум х BeatFilm.
         </p>
-        <div className="copyright">
+        <section className="copyright">
           <p className="copyright__text">© 2023</p>
-          <div className="praktikum">
+          <section className="praktikum">
             <p className="copyright__text">
               Яндекс.Практикум
             </p>
             <p className="copyright__text">
               Github
             </p>
-          </div>
-        </div>
-      </footer>
-    </div>
+          </section>
+        </section>
+      </section>
+    </footer>
   )
 }
 

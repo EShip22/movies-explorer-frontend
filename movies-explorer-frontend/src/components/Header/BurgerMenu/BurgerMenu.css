@@ -9,6 +9,7 @@
   height: 100%;
   background-color: #FFFFFF;
   z-index: 2;
+  position: fixed;
 }
 .burger-menu__close {
   width: 22px;

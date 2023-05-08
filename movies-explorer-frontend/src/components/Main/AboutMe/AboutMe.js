@@ -4,22 +4,22 @@ import { Link } from "react-router-dom";
 
 const PortfolioProject = (props) => {
   return (
-    <div >
+    <li>
       <Link to={props.projectLink}  target="_blank" className={`portfolio-project  ${props.isLast ? 'portfolio-project_last' : ''} `}>
         <p className="portfolio-project__name">{props.projectName}</p>
         <p className="portfolio-project__link">↗</p>
       </Link>
-    </div>
+    </li>
   )
 }
 
 const AboutMe = () => {
   return (
-    <div className="aboutme-container">
+    <section className="aboutme-container">
       <section className="aboutme">
         <h2 className="aboutme__header">Студент</h2>
         <article className="central-block">
-          <div className="info-container">
+          <section className="info-container">
             <p className="info-container__name">Егор</p>
             <p className="info-container__profage">Фронтент-разработчик, 33 года</p>
             <p className="info-container__description">
@@ -30,27 +30,29 @@ const AboutMe = () => {
               Помимо работы я увлекаюсь поездками по заграницам, горными лыжами, велосипедом, плаванием с аквалангом, ходить в бассейн и спортзал
             </p>
             <Link to="https://github.com/EShip22"  target="_blank" className="info-container__github">Github</Link>
-          </div>
+          </section>
           <img className="aboutme__img" src={me} alt="фото"/>
         </article>
-        <div className="portfolio">
+        <section className="portfolio">
           <p className="portfolio__header">Портфолио</p>
-          <PortfolioProject
-            projectName="Статичный сайт"
-            projectLink="https://eship22.github.io/how-to-learn/"
-          />
-          <PortfolioProject
-            projectName="Адаптивный сайт"
-            projectLink="https://eship22.github.io/russian-travel/"
-          />
-          <PortfolioProject
-            projectName="Одностраничное приложение"
-            projectLink="https://osetr22.students.nomoredomains.work"
-            isLast={true}
-          />
-        </div>
+          <ul className="portfolio-list">
+            <PortfolioProject
+              projectName="Статичный сайт"
+              projectLink="https://eship22.github.io/how-to-learn/"
+            />
+            <PortfolioProject
+              projectName="Адаптивный сайт"
+              projectLink="https://eship22.github.io/russian-travel/"
+            />
+            <PortfolioProject
+              projectName="Одностраничное приложение"
+              projectLink="https://osetr22.students.nomoredomains.work"
+              isLast={true}
+            />
+          </ul>
+        </section>
       </section>
-    </div>
+    </section>
   )
 }
 

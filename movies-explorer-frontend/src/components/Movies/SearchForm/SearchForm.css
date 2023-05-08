@@ -8,7 +8,7 @@
   border-bottom: 1px solid #AAAAAA32;
   padding-bottom: 83px;
 }
-.search-container{
+.search-container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -25,6 +25,9 @@
   line-height: 18px;
   color: #A0A0A0;
   width: 100%;
+}
+.search-container:has(.search-container__input:focus){
+  outline: 1px solid #2BE080;
 }
 .search-container__button {
   border: none;

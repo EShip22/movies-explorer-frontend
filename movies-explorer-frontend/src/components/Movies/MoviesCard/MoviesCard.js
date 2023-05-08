@@ -10,7 +10,7 @@ const MoviesCard = (props) => {
   }
 
   return (
-    <div className="movies-card">
+    <li className="movies-card">
       <header className="card-header">
         <h3 className="card-header__text-head">
           В погоне за Бенкси
@@ -31,7 +31,7 @@ const MoviesCard = (props) => {
             Сохранить
           </button>
       }
-    </div>
+    </li>
   )
 }
 

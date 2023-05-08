@@ -7,13 +7,13 @@ import "./Movies.css";
 
 const Movies = () => {
   return (
-    <div className="movies-container">
+    <section className="movies-container">
       <Header/>
       <SearchForm/>
       <MoviesCardList />
       <Preloader/>
       <Footer/>
-    </div>
+    </section>
   )
 }
 

@@ -8,14 +8,16 @@ import './Main.css';
 
 const Main = () => {
   return (
-    <div className="root">
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
+    <>
+      <main className="root">
+        <Promo />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+      </main>
       <Footer />
-    </div>
-    );
+    </>
+  );
 }
 
 export default Main;

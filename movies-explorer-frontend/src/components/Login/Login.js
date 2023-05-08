@@ -17,10 +17,10 @@ const Login = () => {
           id="password-input" name="password" required />
       </form>
       <button className="login__button-reg">Войти</button>
-      <div className="already-login">
+      <section className="already-login">
         <p className="already-login__label">Еще не зарегистрированы?</p>&nbsp;
         <Link to="/signup" className="already-login__link">Регистрация</Link>
-      </div>
+      </section>
     </section>
   )
 }

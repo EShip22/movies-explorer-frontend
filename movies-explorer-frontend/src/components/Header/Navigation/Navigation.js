@@ -12,16 +12,16 @@ const Navigation = () => {
 
   return (
     <nav className="nav">
-      <div className="nav-films">
+      <section className="nav-films">
         <Link className="nav__link nav__link_films" to="/movies">Фильмы</Link>
         <Link className="nav__link" to="/saved-movies">Сохранённые фильмы</Link>
-      </div>
-      <div className="nav-profile">
+      </section>
+      <section className="nav-profile">
         <Link className="nav__link" to="/profile">Аккаунт</Link>
         <Link className="nav__link" to="/signup">
-          <img className="navProfile__img" src={profile} alt="профиль" />
+          <img className="nav-profile__img" src={profile} alt="профиль" />
         </Link>
-      </div>
+      </section>
       <Link
         className="nav__menu-burger-link"
         onClick={() => {
@@ -32,12 +32,12 @@ const Navigation = () => {
       </Link>
       {
         isShowMenu &&
-        <div className="cover">
+        <section className="cover">
           <BurgerMenu
             isShowMenu={isShowMenu}
             setIsShowMenu={setIsShowMenu}
           />
-        </div>
+        </section>
       }
     </nav>
   )

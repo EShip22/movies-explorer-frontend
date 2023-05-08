@@ -2,7 +2,7 @@ import "./Techs.css";
 
 const Techs = () => {
   return (
-    <div className="techs-container">
+    <section className="techs-container">
       <section className="techs">
         <h2 className="techs__header">Технологии</h2>
         <article className="center-text">
@@ -19,7 +19,7 @@ const Techs = () => {
           <div className="techs-grid__item">mongoDB</div>
         </section>
       </section>
-    </div>
+    </section>
   )
 }
 

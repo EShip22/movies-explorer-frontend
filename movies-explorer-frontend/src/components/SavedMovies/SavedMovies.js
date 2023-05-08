@@ -5,12 +5,12 @@ import Footer from "../Footer/Footer";
 
 const SavedMovies = () => {
   return (
-    <div>
+    <section>
       <Header />
       <SearchForm />
       <MoviesCardList />
       <Footer />
-    </div>
+    </section>
   )
 }
 

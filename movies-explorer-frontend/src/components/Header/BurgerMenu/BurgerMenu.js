@@ -1,11 +1,11 @@
 import "./BurgerMenu.css";
-import close from "../../../images/close.png";
+import close from "../../../images/close.svg";
 import account from "../../../images/account.svg";
 import { NavLink } from "react-router-dom";
 
 const BurgerMenu = (props) => {
   return (
-    <div className="burger-menu">
+    <section className="burger-menu">
       <img
         className="burger-menu__close"
         src={close}
@@ -25,7 +25,7 @@ const BurgerMenu = (props) => {
           alt="аккаунт"
         />
       </NavLink>
-    </div>
+    </section>
   )
 }
 
