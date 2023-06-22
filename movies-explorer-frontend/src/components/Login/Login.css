@@ -67,6 +67,10 @@
   margin-top: 180px;
   transition: opacity 0.2s linear;
 }
+.login__button-reg_disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}
 .login__button-reg:hover {
   cursor: pointer;
   opacity: 0.8;

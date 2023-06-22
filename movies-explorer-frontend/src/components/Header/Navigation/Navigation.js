@@ -17,27 +17,27 @@ const Navigation = () => {
         <Link className="nav__link" to="/saved-movies">Сохранённые фильмы</Link>
       </section>
       <section className="nav-profile">
-        <Link className="nav__link" to="/profile">Аккаунт</Link>
-        <Link className="nav__link" to="/signup">
+        <Link className="nav__link" to="/profile">
+          Аккаунт
           <img className="nav-profile__img" src={profile} alt="профиль" />
         </Link>
       </section>
-      <Link
+      <nav
         className="nav__menu-burger-link"
         onClick={() => {
           setIsShowMenu(true);
         }}
       >
-        <img className="nav__menu-burger-img" src={burgerMenu} alt="профиль" />
-      </Link>
+        <img className="nav__menu-burger-img" src={burgerMenu} alt="профиль" onClick={() => {setIsShowMenu(true)}} />
+      </nav>
       {
-        isShowMenu &&
+        isShowMenu ?
         <section className="cover">
           <BurgerMenu
             isShowMenu={isShowMenu}
             setIsShowMenu={setIsShowMenu}
           />
-        </section>
+        </section> : <></>
       }
     </nav>
   )

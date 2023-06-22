@@ -1,35 +1,84 @@
+import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
-import img1 from "../../../images/pic1.png";
-import img2 from "../../../images/pic2.png";
-import img3 from "../../../images/pic3.png";
-import img4 from "../../../images/pic4.png";
-import img5 from "../../../images/pic5.png";
-import img6 from "../../../images/pic6.png";
-import img7 from "../../../images/pic7.png";
-import img8 from "../../../images/pic8.png";
-import img9 from "../../../images/pic9.png";
-import img10 from "../../../images/pic10.png";
-import img11 from "../../../images/pic11.png";
-import img12 from "../../../images/pic12.png";
+import NotFoundText from "../NotFoundText/NotFoundText";
 
 
 const MoviesCardList = (props) => {
+  const [addCount, setAddCount] = React.useState(0);
+  const [clienWidth, setClientWidth] = React.useState(window.innerWidth);
+
+  React.useEffect(() => {
+    if (clienWidth >= 0 && clienWidth <= 767) {
+      setAddCount(2);
+    } else if (clienWidth > 767 && clienWidth <= 1279) {
+      setAddCount(2);
+    } else {
+      setAddCount(3);
+    }
+  },[]);
+
+  window.addEventListener("resize", () => {
+    if ( window.innerWidth >= 320 && window.innerWidth <= 1279) {
+      setTimeout(setAddCount(2), 1000);
+    } else if (window.innerWidth > 1279) {
+      setTimeout(setAddCount(3), 1000);
+    }
+  });
+
+  const handleAddCards = () => {
+    props.setCurrIndex(props.currIndex + addCount);
+  }
+
   return (
-    <ul className="movies-card-list movies-card-list_short-bottom">
-      <MoviesCard img={img1} isSaved={true}/>
-      <MoviesCard img={img2} isSaved={true}/>
-      <MoviesCard img={img3} isSaved={false}/>
-      <MoviesCard img={img4} isSaved={false}/>
-      <MoviesCard img={img5} isSaved={false}/>
-      <MoviesCard img={img6} isSaved={true}/>
-      <MoviesCard img={img7} isSaved={true}/>
-      <MoviesCard img={img8} isSaved={false}/>
-      <MoviesCard img={img9} isSaved={false}/>
-      <MoviesCard img={img10} isSaved={false}/>
-      <MoviesCard img={img11} isSaved={true}/>
-      <MoviesCard img={img12} isSaved={false}/>
-    </ul>
+    <>
+      {
+        !props.isNotFound
+          ?
+        (
+          <ul className="movies-card-list movies-card-list_short-bottom">
+            {
+              props.moviesList
+                ?.slice(0, props.currIndex)
+                ?.map((elem, i) => {
+                  const isLike = props.moviesListSaved?.some(i => {
+                    return i.movieId === elem.id
+                  });
+                  return (
+                    <MoviesCard
+                      key={i}
+                      img={`https://api.nomoreparties.co/${elem.image.url}`}
+                      isLiked={isLike}
+                      header={elem.nameRU}
+                      trailerLink={elem.trailerLink}
+                      duration={elem.duration}
+                      onAddLike={() => props.onAddLike(elem)}
+                      onDelLike={() => props.onDelLike(elem)}
+                    />
+                  )
+                })
+            }
+            {
+              props.isErrorGetFilms &&
+              <p>
+                Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. 
+                Подождите немного и попробуйте ещё раз
+              </p>
+            }
+          </ul>
+        )
+          :
+        (
+          <NotFoundText />
+        )
+      } 
+      
+      {
+       <section className={`more ${props.currIndex >= props.moviesList?.length ? `more_hide` : ''}`}>
+          <button className="more__button" onClick={handleAddCards}>Ещё</button>
+       </section>
+      }
+    </>    
   )
 }
 

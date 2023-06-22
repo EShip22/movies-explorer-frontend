@@ -79,4 +79,7 @@
   .burger-menu__link-account {
     margin: auto auto 50px;
   }
+  .burger-menu__close {
+    margin-bottom : 75px;
+  }
 }

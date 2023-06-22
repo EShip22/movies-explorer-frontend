@@ -1,33 +1,31 @@
 import "./MoviesCard.css";
 import checkImg from "../../../images/checkFilm.svg";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MoviesCard = (props) => {
-
-  const [isSaved, setIsSaved] = React.useState(props.isSaved);
-  const setSaved = () => {
-    return setIsSaved(!isSaved);
-  }
 
   return (
     <li className="movies-card">
       <header className="card-header">
         <h3 className="card-header__text-head">
-          В погоне за Бенкси
+          {props.header}
         </h3>
         <p className="card-header__text-time">
-          27 минут
+          {`${props.duration} мин`}
         </p>
       </header>
-      <img className="movies-card__img" alt="кадр из фильма" src={props.img} />
+      <Link to={props.trailerLink} target="_blank">
+        <img className="movies-card__img" alt="кадр из фильма" src={props.img} />
+      </Link>
       {
-        isSaved
+      (props.isLiked)
         ?
-          <button className="movies-card__btn movies-card__btn_withcheck" onClick={setSaved}>
+          <button className="movies-card__btn movies-card__btn_withcheck" onClick={props.onDelLike}>
             <img src={checkImg} alt="Чекбокс" />
           </button>
         :
-          <button className="movies-card__btn movies-card__btn_withtext" onClick={setSaved}>
+          <button className="movies-card__btn movies-card__btn_withtext" onClick={props.onAddLike}>
             Сохранить
           </button>
       }

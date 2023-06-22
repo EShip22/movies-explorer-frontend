@@ -1,6 +1,6 @@
 import "./Footer.css";
 
-const Footer = () => {
+const Footer = (props) => {
   return (
     <footer className="footer-container">
       <section className="footer">

@@ -52,6 +52,7 @@
   color: #EE3465;
   margin-bottom: 0;
 }
+
 .register__button-reg {
   background: #2BE080;
   border: none;
@@ -67,10 +68,17 @@
   margin-top: 70px;
   transition: opacity 0.2s linear;
 }
+
 .register__button-reg:hover {
   cursor: pointer;
   opacity: 0.8;
 }
+
+.register__button-reg_disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
 .already-register {
   display: flex;
   align-items: center;
