@@ -150,5 +150,5 @@ class MainApi {
 
 
 export const mainApi = new MainApi({
-  baseUrl: 'https://api.osetrdiplom.nomoredomains.monster'
+  baseUrl: 'http://localhost:3002'
 });

@@ -79,9 +79,9 @@ const App = () => {
         navigate('/movies');
       })
       .catch((err) => {
-        err.then((error) => {
+        /*err.then((error) => {
           setFormError(error);
-        });
+        });*/
       })
   }
 
@@ -135,6 +135,14 @@ const App = () => {
     return (
       <div className='page'>
         <Routes>
+          <Route
+            path="/signup"
+            element={
+              <Register
+                onLogin={handleLogin}
+              />
+            }
+          />
           <Route
             path="/signin"
             element={
