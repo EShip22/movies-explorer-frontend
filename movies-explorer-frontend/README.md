@@ -1,6 +1,5 @@
-Дипломный проект
+Дипломный проект ч.3
 Веб интерфейс поиска кино. Ипользуются технологии html, css, js, react.js
 
-Ссылка на макет:
-https://disk.yandex.ru/d/6GPsh9HAF7M0KQ
-так же файл лежит в корне проекте
+Ссылка на проект:
+https://osetrdiplom.nomoredomains.nomoreparties.sbs
