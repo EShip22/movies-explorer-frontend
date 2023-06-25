@@ -155,6 +155,18 @@ const App = () => {
               />
             }
           />
+          <Route
+            path="*"
+            element={
+              <Login
+                onLogin={handleLogin}
+                isLogin={isLogin}
+                setIsLogin={setIsLogin}
+                setFormError={setFormError}
+                formError={formError}
+              />
+            }
+          />
         </Routes>
       </div>
     )
