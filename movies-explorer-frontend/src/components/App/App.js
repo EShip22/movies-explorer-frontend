@@ -130,49 +130,6 @@ const App = () => {
     localStorage.removeItem('savedFilms');
   }
 
-  // пока не пройдет проверка токена не отрисовывать компоненты
-  if (!isLogin) {
-    return (
-      <div className='page'>
-        <Routes>
-          <Route
-            path="/signup"
-            element={
-              <Register
-                onLogin={handleLogin}
-              />
-            }
-          />
-          <Route
-            path="/signin"
-            element={
-              <Login
-                onLogin={handleLogin}
-                isLogin={isLogin}
-                setIsLogin={setIsLogin}
-                setFormError={setFormError}
-                formError={formError}
-              />
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <Login
-                onLogin={handleLogin}
-                isLogin={isLogin}
-                setIsLogin={setIsLogin}
-                setFormError={setFormError}
-                formError={formError}
-              />
-            }
-          />
-          <Route path="/" element={<Main/>} />
-        </Routes>
-      </div>
-    )
-  }
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
