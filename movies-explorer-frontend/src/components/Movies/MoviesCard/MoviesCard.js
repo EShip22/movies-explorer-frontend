@@ -12,7 +12,7 @@ const MoviesCard = (props) => {
           {props.header}
         </h3>
         <p className="card-header__text-time">
-          {`${props.duration} мин`}
+          {`${props.duration}`}
         </p>
       </header>
       <Link to={props.trailerLink} target="_blank">
@@ -28,7 +28,7 @@ const MoviesCard = (props) => {
           <button className="movies-card__btn movies-card__btn_withtext" onClick={props.onAddLike}>
             Сохранить
           </button>
-      }
+                }
     </li>
   )
 }

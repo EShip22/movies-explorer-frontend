@@ -8,6 +8,7 @@ const Login = (props) => {
   const [formEmail, setFormEmail] = React.useState("");
   const [formEmailError, setFormEmailError] = React.useState("");
   const [formPassword, setFormPassword] = React.useState("");
+  const [formPasswordError, setFormPasswordError] = React.useState("");
   const [isBtnDisabled, setIsBtnDisabled] = React.useState(true);
 
   React.useEffect(() => {
@@ -16,7 +17,18 @@ const Login = (props) => {
     } else {
       setFormEmailError("некорректный email");
     }
+    if (formEmail.length === 0) {
+      setFormEmailError("введите email");
+    }
   }, [formEmail]);
+
+  React.useEffect(() => {
+    if (formPassword.length === 0) {
+      setFormPasswordError("введите пароль");
+    } else {
+      setFormPasswordError("");
+    }
+  }, [formPassword])
 
   const checkEmailValidity = React.useCallback(() => {
     if (formEmail.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/g) || formEmail?.length === 0 ) {
@@ -71,12 +83,13 @@ const Login = (props) => {
       <h2 className="login__header">Рады видеть!</h2>
       <form className="login__form" name="login-form" onSubmit={handleSubmit}>
         <p className="login__label">E-Mail</p>
-        <input className="login__input" type="text" name="email" required minLength="2" placeholder="email" maxLength="40" 
+        <input className={`login__input ${checkEmailValidity() ? '' : 'login__input_error'}`} type="text" name="email" placeholder="email" 
           onChange={handleChangeEmail} value={formEmail}/>
         <p className="login__label login__label_error">{formEmailError}</p>
         <p className="login__label">Пароль</p>
         <input className="login__input" type="password" placeholder="Пароль"
-          id="password-input" name="password" required onChange={handleChangePassword} value={formPassword}/>
+          id="password-input" name="password" onChange={handleChangePassword} value={formPassword}/>
+        <p className="login__label login__label_error">{formPasswordError}</p>
         <p className="login__label login__label_error">{props.formError}</p>
         <input className={`login__button-reg ${isBtnDisabled ? 'login__button-reg_disabled' : ''}`} type="submit" value="Войти"></input>
       </form>

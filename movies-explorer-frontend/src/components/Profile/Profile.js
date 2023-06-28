@@ -9,9 +9,9 @@ const Profile = (props) => {
   const currentUser = React.useContext(CurrentUserContext);
   const [isEdit, setIsEdit] = React.useState(false);
 
-  const [formName, setFormName] = React.useState(currentUser.name);
+  const [formName, setFormName] = React.useState(currentUser.name ?? "");
   const [formNameError, setFormNameError] = React.useState("");
-  const [formEmail, setFormEmail] = React.useState(currentUser.email);
+  const [formEmail, setFormEmail] = React.useState(currentUser.email ?? "");
   const [formEmailError, setFormEmailError] = React.useState("");
   const [isBtnDisabled, setIsBtnDisabled] = React.useState(true);
 
@@ -40,7 +40,6 @@ const Profile = (props) => {
   React.useEffect(() => {
     setIsBtnDisabled(isDisabled());
     props.setFormError('');
-
   },[formEmail, formName]);
 
   React.useEffect(() => {
@@ -48,6 +47,13 @@ const Profile = (props) => {
       setFormNameError("");
     } else {
       setFormNameError("имя должно содержать только буквы, пробел или дефис");
+    }
+    if (formName.length === 0) {
+      setFormNameError("введите имя");
+    } else {
+      if (formName.length < 2 || formName.length > 30) {
+        setFormNameError("длина поля долна быть от 2 до 30 символов");
+      }
     }
   }, [formName]);
 
@@ -87,6 +93,7 @@ const Profile = (props) => {
     })
       .then((res) => {
         props.setCurrentUser(res);
+        alert('данные пользователя успешно обновлены');
       })
       .catch((err) => {
         err.then((error) => {
@@ -106,7 +113,7 @@ const Profile = (props) => {
             isEdit
             ?
               <>
-                <input className={`profile__input ${checkNameValidity() ? '' : 'profile__input_error'}`} type="edit" placeholder="Имя" value={formName} 
+                <input className={`profile__input ${checkNameValidity() && formName?.length > 1 && formName?.length < 31 ? '' : 'profile__input_error'}`} type="edit" placeholder="Имя" value={formName} 
                   onChange={handleChangeName}/>
                 <p className="about-row__label about-row__label_error">{formNameError}</p>
               </>

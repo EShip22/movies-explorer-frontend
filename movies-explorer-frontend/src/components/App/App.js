@@ -11,6 +11,8 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { mainApi } from '../../utils/MainApi';
 import {CurrentUserContext} from '../../context/CurrentUserContext';
+import { useLocation } from 'react-router-dom';
+
 
 const App = () => {
 
@@ -34,14 +36,19 @@ const App = () => {
 
   //  короткометражки
   const [isShort, setIsShort] = React.useState((localStorage.getItem('isShort') === 'true') || false);
+  const [isShortSaved, setIsShortSaved] = React.useState((localStorage.getItem('isShortSaved') === 'true') || false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [formError, setFormError] = React.useState("");
   const [searchValue, setSearchValue] = React.useState(localStorage.getItem('inputSearchText') || "");
+
+  const [isRender, setIsRender] = React.useState(false);
+  const location = useLocation();
 
   React.useEffect(() => {
     if(isLogin) {
       mainApi.getUserInfo()
         .then((res) => {
+          setIsLogin(true);
           setCurrentUser(res);
         })
         .catch((err) => console.log(err))
@@ -57,11 +64,17 @@ const App = () => {
     if (jwt) {
       mainApi.getContent(jwt)
         .then((res)=> {
+          setIsRender(true);
           if(res) {
             setIsLogin(true);
           }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err)
+          setIsRender(true)
+        })
+    } else {
+      setIsRender(true);
     }
   }
 
@@ -79,25 +92,34 @@ const App = () => {
         navigate('/movies');
       })
       .catch((err) => {
-        /*err.then((error) => {
+        err.then((error) => {
           setFormError(error);
-        });*/
+        });
       })
   }
 
   const handleToggleIsShort = () => {
-    setIsShort(!isShort);
-    localStorage.setItem('isShort', (!isShort).toString())
+    if ( location.pathname === '/movies' ) {
+      setIsShort(!isShort);
+      localStorage.setItem('isShort', (!isShort).toString());
+    }
+    if (location.pathname === '/saved-movies') {
+      setIsShortSaved(!isShortSaved);
+      localStorage.setItem('isShortSaved', (!isShortSaved).toString());
+    }
+  }
+
+  const isLiked = (card) => {
+    return moviesListSaved?.some(i => {
+      return i.movieId === card.id ;
+    });
   }
 
   const handleAddLike = (movie) => {
     mainApi.addLike(movie)
       .then((res) => {
-       mainApi.getMovies(localStorage.getItem('jwt'))
-          .then((res) => {
-            setMoviesListSaved(res);
-            localStorage.setItem('savedFilms', JSON.stringify(res));
-          })
+        setMoviesListSaved([...moviesListSaved, res]);
+        localStorage.setItem('savedFilms', JSON.stringify([...moviesListSaved, res]));
       })
       .catch((err) => {
         console.log(err);
@@ -106,15 +128,13 @@ const App = () => {
 
   const handleDelLike = (movie) => {
     const getIdByMovieId = (movieId) => {
-      const id = moviesListSaved?.find((elem) => elem.movieId ===movieId)?._id;
+      const id = moviesListSaved?.find((elem) => elem.movieId === movieId)?._id;
       return id;
     }
     mainApi.delLike(getIdByMovieId(movie.id) ?? movie._id)
       .then((res) => {
-        mainApi.getMovies(localStorage.getItem('jwt'))
-          .then((result) => {
-            setMoviesListSaved(result);
-          });
+        setMoviesListSaved(moviesListSaved.filter((elem) => elem._id !== res._id))
+        localStorage.setItem('savedFilms', JSON.stringify(moviesListSaved.filter((elem) => elem._id !== res._id)));
       })
       .catch((err) => {
         console.log(err);
@@ -127,10 +147,25 @@ const App = () => {
     localStorage.removeItem('searchValueSaved');
     localStorage.removeItem('jwt');
     localStorage.removeItem('isShort');
+    localStorage.removeItem('isShortSaved');
     localStorage.removeItem('savedFilms');
+    setIsLogin(false);
   }
 
+  const minutesToNormalTime = (totalMin) => {
+    const min = totalMin % 60;
+    const hours = Math.floor(totalMin / 60);
+    if (hours === 0) {
+      return `${min}мин`;
+    }
+    if (min === 0) {
+      return `${hours}ч`;
+    }
+    return `${hours}ч:${min}мин`;
+  } 
+
   return (
+    isRender &&
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <Routes>
@@ -146,11 +181,13 @@ const App = () => {
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
                         isShort={isShort}
+                        isLiked={isLiked}
                         onClickIsShort={handleToggleIsShort}
                         onAddLike={handleAddLike}
                         onDelLike={handleDelLike}
                         currIndex={currIndex}
                         setCurrIndex={setCurrIndex}
+                        minutesToNormalTime={minutesToNormalTime}
                       />
                     )
                   }
@@ -171,9 +208,10 @@ const App = () => {
                         moviesListSaved={moviesListSaved}
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
-                        isShort={isShort}
+                        isShortSaved={isShortSaved}
                         onClickIsShort={handleToggleIsShort}
                         onDelLike={handleDelLike}
+                        minutesToNormalTime={minutesToNormalTime}
                       />
                     )
                   }
@@ -202,7 +240,7 @@ const App = () => {
               />
             }
           />
-          <Route path="/" element={<Main/>} />
+          <Route path="/" element={<Main isLogin={isLogin}/>} />
           <Route
             path="/signup"
             element={

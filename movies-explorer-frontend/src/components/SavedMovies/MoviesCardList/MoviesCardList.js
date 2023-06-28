@@ -9,6 +9,7 @@ const MoviesCardList = (props) => {
       <ul className="movies-card-list movies-card-list_saved">
         {
           props.moviesListSaved?.map((elem, i) => {
+            const time = props.minutesToNormalTime(elem.duration);
             return (
               <MoviesCard
                 key={elem._id}
@@ -16,7 +17,7 @@ const MoviesCardList = (props) => {
                 isSaved={false}
                 header={elem.nameRU}
                 trailerLink={elem.trailerLink}
-                duration={elem.duration}
+                duration={time}
                 onDelLike={() => {props.onDelLike(elem)}}
               />
             );

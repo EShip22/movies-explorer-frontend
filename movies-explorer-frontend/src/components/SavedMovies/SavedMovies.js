@@ -9,7 +9,6 @@ const SavedMovies = (props) => {
   const [savedFilmsShow, setSavedFilmsShow] = React.useState(props.moviesListSaved);
 
   React.useEffect(() => {
-    
     if (!localStorage.getItem('searchValueSaved')) {
       setSavedFilmsShow(props.moviesListSaved);
     }
@@ -24,14 +23,15 @@ const SavedMovies = (props) => {
               elem.nameEN?.toLowerCase().indexOf(localStorage.getItem('searchValueSaved')?.toLowerCase()) >= 0
             :
               true
-          ) &&
+          )
+            &&
           (
-            props.isShort ? elem.duration <= 40 : true
+            props.isShortSaved ? elem.duration <= 40 : true
           )
         )
       })
     )
-  }, [props.isShort]);
+  }, [props.isShortSaved]);
 
 
   const handleGetMovies = (inputSearchStr) => {
@@ -45,9 +45,10 @@ const SavedMovies = (props) => {
         (
           elem.nameRU.toLowerCase().indexOf(inputSearchStr?.toLowerCase()) >= 0 ||
           elem.nameEN.toLowerCase().indexOf(inputSearchStr?.toLowerCase()) >= 0
-        ) &&
+        )
+          &&
         (
-          props.isShort ? elem.duration <= 40 : true
+          props.isShortSaved ? elem.duration <= 40 : true
         )
       )
     });
@@ -64,12 +65,13 @@ const SavedMovies = (props) => {
         savedFilms={props.moviesListSaved}
         setSavedFilms={props.setSavedFilms}
         onClickIsShort={props.onClickIsShort}
-        isShort={props.isShort}
+        isShortSaved={props.isShortSaved}
         handleGetMovies={handleGetMovies}
       />
       <MoviesCardList
         moviesListSaved={savedFilmsShow}
         onDelLike={props.onDelLike}
+        minutesToNormalTime={props.minutesToNormalTime}
       />
       <Footer />
     </section>

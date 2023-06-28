@@ -3,17 +3,29 @@ import headerImg from "../../../images/text__COLOR_landing-logo.svg"
 import "./Promo.css";
 import { Link } from "react-router-dom";
 
-const Promo = () => {
+const Promo = (props) => {
   return (
     <section className="background-container">
      <header className="promo">
         <section className="title">
           <img alt="лого" src={logo} />
           <section className="auth">
-            <Link className="auth__signup" to="/signup">Регистрация</Link>
-            <Link to="/signin">
-              <button className="auth__signin" type="button">Войти</button>
-            </Link>
+            {
+              props.isLogin
+                ?
+              <>
+                <Link className="auth__signup" to="/movies">Фильмы</Link>
+                <Link className="auth__signup" to="/saved-movies">Сохраненные фильмы</Link>
+                <Link className="auth__signup" to="/profile">Аккаунт</Link>
+              </>
+                :
+              <>
+                <Link className="auth__signup" to="/signup">Регистрация</Link>
+                <Link to="/signin">
+                  <button className="auth__signin" type="button">Войти</button>
+                </Link>
+              </>
+            }
           </section>
         </section>
         <section className="center-block">

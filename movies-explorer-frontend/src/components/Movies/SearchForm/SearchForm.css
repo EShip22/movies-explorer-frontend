@@ -8,6 +8,15 @@
   border-bottom: 1px solid #AAAAAA32;
   padding-bottom: 83px;
 }
+.search-form__error {
+  color: #EE3465;
+  font-size: 12px;
+}
+.search-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 .search-container {
   display: flex;
   justify-content: flex-start;
@@ -25,6 +34,10 @@
   line-height: 18px;
   color: #A0A0A0;
   width: 100%;
+}
+.search-container__button_diabled {
+  pointer-events: none;
+  opacity: 0.65;
 }
 .search-container:has(.search-container__input:focus){
   outline: 1px solid #2BE080;
@@ -52,6 +65,7 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.2s linear;
+  margin-bottom: 20px;
 }
 .short-films-container:hover {
   cursor: pointer;

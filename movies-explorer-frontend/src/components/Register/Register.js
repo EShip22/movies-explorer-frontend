@@ -20,6 +20,12 @@ const Register = (props) => {
     } else {
       setFormNameError("имя должно содержать только буквы, пробел или дефис");
     }
+    if (formName.length === 0) {
+      setFormNameError("необходимо ввести имя");
+    } 
+    if (formName?.length === 1 || formName?.length > 30) {
+      setFormNameError("длина должна быть от 2 до 30 символов");
+    } 
   }, [formName]);
 
   React.useEffect(() => {
@@ -28,6 +34,9 @@ const Register = (props) => {
     } else {
       setFormEmailError("некорректный email");
     }
+    if (formEmail.length === 0) {
+      setFormEmailError("необходимо ввести email");
+    } 
   }, [formEmail]);
 
   const checkNameValidity = React.useCallback(() => {
@@ -83,7 +92,12 @@ const Register = (props) => {
   },[formName, formEmail, formPassword]);
 
   const isDisabled = () => {
-    if (checkEmailValidity() && formEmail?.length > 0 && checkNameValidity() && formName?.length > 0 && formPassword.length > 0) {
+    if (checkEmailValidity() &&
+        //formEmail?.length > 0 && 
+        checkNameValidity() && 
+        formName?.length > 1 && 
+        formName?.length <= 30 && 
+        formPassword.length > 0) {
       return false;
     }
     return true;
@@ -97,7 +111,8 @@ const Register = (props) => {
         <h2 className="register__header">Добро пожаловать!</h2>
       <form className="register__form" name="register-form" onSubmit={handleSubmit}>
         <p className="register__label">Имя</p>
-        <input className={`register__input ${checkNameValidity() ? '' : 'register__input_error'}`} type="text" name="name" required minLength="2" placeholder="Имя" maxLength="40"
+        <input className={`register__input ${checkNameValidity() && formName?.length > 1 && formName?.length < 31 ? '' : 'register__input_error'}`} 
+          type="text" name="name" required minLength="2" placeholder="Имя" maxLength="40"
           onChange={handleChangeName} />
         <p className="register__label register__label_error">{formNameError}</p>
         <p className="register__label">E-Mail</p>

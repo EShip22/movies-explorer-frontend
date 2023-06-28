@@ -6,11 +6,11 @@ import AboutMe from './AboutMe/AboutMe';
 import Footer from '../Footer/Footer';
 import './Main.css';
 
-const Main = () => {
+const Main = (props) => {
   return (
     <>
       <main className="root">
-        <Promo />
+        <Promo isLogin={props.isLogin}/>
         <AboutProject />
         <Techs />
         <AboutMe />

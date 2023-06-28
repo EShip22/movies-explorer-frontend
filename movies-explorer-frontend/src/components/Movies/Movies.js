@@ -30,20 +30,26 @@ const Movies = (props) => {
     setIsLoading(true);
     moviesApi.getFilms()
       .then((res) => {
-        let filterMovies = res.filter((elem) => {
+
+        const findedMovies = res.filter((elem) => {
           return (
             (
               elem.nameRU.toLowerCase().indexOf(inputSearchStr.toLowerCase()) >= 0 ||
               elem.nameEN.toLowerCase().indexOf(inputSearchStr.toLowerCase()) >= 0
-            ) &&
-            (
-              props.isShort ? elem.duration <= 40 : true
             )
           )
         })
 
-        localStorage.setItem('films', JSON.stringify(filterMovies));
+        let filterMovies = findedMovies.filter((elem) => {
+          return (
+            props.isShort ? elem.duration <= 40 : true
+          )
+        })
+
+        //localStorage.setItem('films', JSON.stringify(filterMovies));
+        localStorage.setItem('films', JSON.stringify(findedMovies));
         localStorage.setItem('searchValue', inputSearchStr);
+        localStorage.setItem('isShort', props.isShort.toString());
         setMoviesList(filterMovies);
         if (filterMovies?.length === 0) {
           setIsNotFound(true);
@@ -81,6 +87,8 @@ const Movies = (props) => {
         isNotFound={isNotFound}
         currIndex={props.currIndex}
         setCurrIndex={props.setCurrIndex}
+        isLiked={props.isLiked}
+        minutesToNormalTime={props.minutesToNormalTime}
       />
       {
         isLoading &&
