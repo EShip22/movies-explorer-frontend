@@ -4,7 +4,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const MoviesCard = (props) => {
-
   return (
     <li className="movies-card">
       <header className="card-header">
@@ -19,16 +18,16 @@ const MoviesCard = (props) => {
         <img className="movies-card__img" alt="кадр из фильма" src={props.img} />
       </Link>
       {
-      (props.isLiked)
-        ?
-          <button className="movies-card__btn movies-card__btn_withcheck" onClick={props.onDelLike}>
-            <img src={checkImg} alt="Чекбокс" />
-          </button>
-        :
-          <button className="movies-card__btn movies-card__btn_withtext" onClick={props.onAddLike}>
-            Сохранить
-          </button>
-                }
+        props.isLiked
+          ?
+            <button className="movies-card__btn movies-card__btn_withcheck" onClick={props.onDelLike}>
+              <img src={checkImg} alt="Чекбокс" />
+            </button>
+          :
+            <button className="movies-card__btn movies-card__btn_withtext" onClick={props.onAddLike}>
+              Сохранить
+            </button>
+      }
     </li>
   )
 }

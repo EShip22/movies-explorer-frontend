@@ -12,21 +12,9 @@ const Movies = (props) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isErrorGetFilms, setIsErrorGetFilms] = React.useState(false);
   const [isNotFound, setIsNotFound] = React.useState(false);
-  const [moviesList, setMoviesList] = React.useState(JSON.parse(localStorage.getItem('films')) || []);
-
-  React.useEffect(() => {
-    setMoviesList(
-      moviesList?.filter((elem) => {
-        return (
-          props.isShort ? elem.duration <= 40 : true
-        )
-      })
-    )
-  }, [props.isShort]);
 
   const handleGetMovies = (inputSearchStr) => {
     setIsNotFound(false);
-    //  фильмы
     setIsLoading(true);
     moviesApi.getFilms()
       .then((res) => {
@@ -39,6 +27,8 @@ const Movies = (props) => {
             )
           )
         })
+        props.setMoviesList(findedMovies);
+        localStorage.setItem('films', JSON.stringify(findedMovies));
 
         let filterMovies = findedMovies.filter((elem) => {
           return (
@@ -46,11 +36,10 @@ const Movies = (props) => {
           )
         })
 
-        //localStorage.setItem('films', JSON.stringify(filterMovies));
-        localStorage.setItem('films', JSON.stringify(findedMovies));
+        localStorage.setItem('showFilms', JSON.stringify(filterMovies));
         localStorage.setItem('searchValue', inputSearchStr);
         localStorage.setItem('isShort', props.isShort.toString());
-        setMoviesList(filterMovies);
+        props.setShowMoviesList(filterMovies);
         if (filterMovies?.length === 0) {
           setIsNotFound(true);
         }
@@ -81,14 +70,16 @@ const Movies = (props) => {
         isErrorGetFilms={isErrorGetFilms}
         onAddLike={props.onAddLike}
         onDelLike={props.onDelLike}
-        moviesList={moviesList}
-        setMoviesList={setMoviesList}
+        moviesList={props.moviesList}
+        setMoviesList={props.setMoviesList}
         moviesListSaved={props.moviesListSaved}
         isNotFound={isNotFound}
         currIndex={props.currIndex}
         setCurrIndex={props.setCurrIndex}
         isLiked={props.isLiked}
         minutesToNormalTime={props.minutesToNormalTime}
+        showMoviesList={props.showMoviesList}
+        setShowMoviesList={props.setShowMoviesList}
       />
       {
         isLoading &&

@@ -104,7 +104,7 @@ const Profile = (props) => {
 
   return (
     <section className="profile">
-      <Header />
+      <Header getSavedMovies={props.getSavedMovies} />
       <h2 className="profile__header">Привет, {currentUser?.name} !</h2>
       <form className="about" name="profile-form" 
         onSubmit={handleSubmit}>

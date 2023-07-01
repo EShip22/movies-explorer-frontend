@@ -30,6 +30,8 @@ const App = () => {
   const navigate = useNavigate();
 
   const [isLogin, setIsLogin] = React.useState(false);
+  const [moviesList, setMoviesList] = React.useState(JSON.parse(localStorage.getItem('films')) || []);
+  const [showMoviesList, setShowMoviesList] = React.useState(JSON.parse(localStorage.getItem('showFilms')) || []);
 
   //  сохраненные фильмы
   const [moviesListSaved, setMoviesListSaved] = React.useState(JSON.parse(localStorage.getItem('savedFilms')) || []);
@@ -102,7 +104,14 @@ const App = () => {
     if ( location.pathname === '/movies' ) {
       setIsShort(!isShort);
       localStorage.setItem('isShort', (!isShort).toString());
-    }
+      let filterMovies = moviesList.filter((elem) => {
+        return (
+          !isShort ? elem.duration <= 40 : true
+        )
+      })
+      setShowMoviesList(filterMovies);
+      localStorage.setItem('showFilms', JSON.stringify(filterMovies));
+     }
     if (location.pathname === '/saved-movies') {
       setIsShortSaved(!isShortSaved);
       localStorage.setItem('isShortSaved', (!isShortSaved).toString());
@@ -188,6 +197,10 @@ const App = () => {
                         currIndex={currIndex}
                         setCurrIndex={setCurrIndex}
                         minutesToNormalTime={minutesToNormalTime}
+                        moviesList={moviesList}
+                        setMoviesList={setMoviesList}
+                        showMoviesList={showMoviesList}
+                        setShowMoviesList={setShowMoviesList}
                       />
                     )
                   }

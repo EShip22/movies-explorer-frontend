@@ -16,7 +16,6 @@ const SearchForm = (props) => {
     if ( location.pathname === '/movies') {
       if ( inputSearchStr.length === 0 ) {
         setSearchError('введите текст для поиска');
-        //дизейблить кнопку
       } else {
         setSearchError('');
       }

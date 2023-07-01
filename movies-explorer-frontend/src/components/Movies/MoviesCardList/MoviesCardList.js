@@ -16,7 +16,7 @@ const MoviesCardList = (props) => {
     } else {
       setAddCount(3);
     }
-  },[]);
+  },[clienWidth]);
 
   window.addEventListener("resize", () => {
     if ( window.innerWidth >= 320 && window.innerWidth <= 1279) {
@@ -38,7 +38,8 @@ const MoviesCardList = (props) => {
         (
           <ul className="movies-card-list movies-card-list_short-bottom">
             {
-              props.moviesList
+              //props.moviesList
+              props.showMoviesList
                 ?.slice(0, props.currIndex)
                 ?.map((elem, i) => {
                   const isLiked = props.isLiked(elem);
