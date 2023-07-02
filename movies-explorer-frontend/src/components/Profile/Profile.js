@@ -148,7 +148,7 @@ const Profile = (props) => {
             <button className="profile__btn-edit" onClick={() => setIsEdit(true)}>Редактировать</button>
         }
       </form>
-      <Link className="profile__out" onClick={props.onLogout} to="/signin">Выйти из аккаунта</Link>
+      <Link className="profile__out" onClick={props.onLogout} >Выйти из аккаунта</Link>
     </section>
   )
 }

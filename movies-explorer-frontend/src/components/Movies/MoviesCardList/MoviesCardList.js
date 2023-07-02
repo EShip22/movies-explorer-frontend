@@ -42,13 +42,13 @@ const MoviesCardList = (props) => {
               props.showMoviesList
                 ?.slice(0, props.currIndex)
                 ?.map((elem, i) => {
-                  const isLiked = props.isLiked(elem);
                   const time = props.minutesToNormalTime(elem.duration);
                   return (
                     <MoviesCard
+                      elem={elem}
                       key={elem.id}
                       img={`https://api.nomoreparties.co/${elem.image.url}`}
-                      isLiked={isLiked}
+                      isLiked={props.isLiked}
                       header={elem.nameRU}
                       trailerLink={elem.trailerLink}
                       duration={time}

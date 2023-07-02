@@ -1,7 +1,7 @@
 import "./MoviesCard.css";
-import checkImg from "../../../images/checkFilm.svg";
 import React from "react";
 import { Link } from "react-router-dom";
+import Like  from "./Like";
 
 const MoviesCard = (props) => {
   return (
@@ -17,17 +17,13 @@ const MoviesCard = (props) => {
       <Link to={props.trailerLink} target="_blank">
         <img className="movies-card__img" alt="кадр из фильма" src={props.img} />
       </Link>
-      {
-        props.isLiked
-          ?
-            <button className="movies-card__btn movies-card__btn_withcheck" onClick={props.onDelLike}>
-              <img src={checkImg} alt="Чекбокс" />
-            </button>
-          :
-            <button className="movies-card__btn movies-card__btn_withtext" onClick={props.onAddLike}>
-              Сохранить
-            </button>
-      }
+      <Like
+        elem={props.elem}
+        isLiked={props.isLiked}
+        onDelLike={props.onDelLike}
+        onAddLike={props.onAddLike}
+      >
+      </Like>
     </li>
   )
 }

@@ -151,7 +151,9 @@ const App = () => {
   }
 
   const handleLogout = () => {
+    navigate('/');
     localStorage.removeItem('films');
+    localStorage.removeItem('showFilms');
     localStorage.removeItem('searchValue');
     localStorage.removeItem('searchValueSaved');
     localStorage.removeItem('jwt');

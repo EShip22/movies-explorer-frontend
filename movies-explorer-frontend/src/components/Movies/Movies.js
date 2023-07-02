@@ -8,7 +8,7 @@ import "./Movies.css";
 import { moviesApi } from "../../utils/MoviesApi";
 
 const Movies = (props) => {
-  //вместо грид - флекс с переносом?
+
   const [isLoading, setIsLoading] = React.useState(false);
   const [isErrorGetFilms, setIsErrorGetFilms] = React.useState(false);
   const [isNotFound, setIsNotFound] = React.useState(false);
