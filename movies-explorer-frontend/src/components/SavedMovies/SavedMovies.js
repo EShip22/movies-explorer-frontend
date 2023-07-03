@@ -1,46 +1,39 @@
 import Header from "../Header/Header";
 import SearchForm from "../Movies/SearchForm/SearchForm";
-import MoviesCardList from "./MoviesCardList/MoviesCardList";
+import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import React from "react";
+import { mainApi } from "../../utils/MainApi";
 
 const SavedMovies = (props) => {
-
-  const [savedFilmsShow, setSavedFilmsShow] = React.useState(props.moviesListSaved);
+  const [savedFilms, setSavedFilms] = React.useState(JSON.parse(localStorage.getItem('savedFilms')) ,[]);
+  const [savedFilmsShow, setSavedFilmsShow] = React.useState([]);
 
   React.useEffect(() => {
-    if (!localStorage.getItem('searchValueSaved')) {
-      setSavedFilmsShow(props.moviesListSaved);
-    }
-
-    setSavedFilmsShow(
-      savedFilmsShow?.filter((elem) => {
-        return (
-          (
-            localStorage.getItem('searchValueSaved') 
-            ?
-              elem.nameRU?.toLowerCase().indexOf(localStorage.getItem('searchValueSaved')?.toLowerCase()) >= 0 ||
-              elem.nameEN?.toLowerCase().indexOf(localStorage.getItem('searchValueSaved')?.toLowerCase()) >= 0
-            :
-              true
-          )
-            &&
-          (
-            props.isShortSaved ? elem.duration <= 40 : true
-          )
-        )
+    mainApi.getMovies(localStorage.getItem('jwt'))
+      .then((res) => {
+        setSavedFilmsShow(res);
+        localStorage.setItem('savedFilms', JSON.stringify(res))
       })
-    )
-  }, [props.isShortSaved]);
+      .catch((err) => {
+        console.log(err);
+      })
+  }, [])
 
+  const handleDelSave = (movie) => {
+    mainApi.delLike(movie._id)
+      .then((res) => {
+        setSavedFilms(savedFilms.filter((elem) => elem._id !== res._id));
+        setSavedFilmsShow(savedFilmsShow.filter((elem) => elem._id !== res._id));
+        localStorage.setItem('savedFilms', JSON.stringify(savedFilms.filter((elem) => elem._id !== res._id)));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
-  const handleGetMovies = (inputSearchStr) => {
-    if (inputSearchStr?.length === 0) {
-      setSavedFilmsShow(props.moviesListSaved);
-      localStorage.setItem('searchValueSaved', inputSearchStr);
-      return;
-    }
-    let filterMovies = props.moviesListSaved?.filter((elem) => {
+  const handleGetSavedMovies = (inputSearchStr) => {
+    let findedMovies = savedFilms?.filter((elem) => {
       return (
         (
           elem.nameRU.toLowerCase().indexOf(inputSearchStr?.toLowerCase()) >= 0 ||
@@ -48,13 +41,12 @@ const SavedMovies = (props) => {
         )
           &&
         (
-          props.isShortSaved ? elem.duration <= 40 : true
+          localStorage.getItem('isShortSaved') === 'true' ? elem.duration <= 40 : true
         )
       )
-    });
+    })
 
-    localStorage.setItem('searchValueSaved', inputSearchStr);
-    setSavedFilmsShow(filterMovies );
+    setSavedFilmsShow(findedMovies);
   }
 
   return (
@@ -62,16 +54,19 @@ const SavedMovies = (props) => {
       <Header />
       <SearchForm
         isSavedFilms={true}
-        savedFilms={props.moviesListSaved}
-        setSavedFilms={props.setSavedFilms}
         onClickIsShort={props.onClickIsShort}
         isShortSaved={props.isShortSaved}
-        handleGetMovies={handleGetMovies}
+        setIsShortSaved={props.setIsShortSaved}
+        handleGetSavedMovies={handleGetSavedMovies}
+        savedFilms={savedFilms}
+        savedFilmsShow={savedFilmsShow}
+        setSavedFilmsShow={setSavedFilmsShow}
       />
       <MoviesCardList
-        moviesListSaved={savedFilmsShow}
-        onDelLike={props.onDelLike}
+        isSaved={true}
+        showMoviesList={savedFilmsShow}
         minutesToNormalTime={props.minutesToNormalTime}
+        handleDelSave={handleDelSave}
       />
       <Footer />
     </section>

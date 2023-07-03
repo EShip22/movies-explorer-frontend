@@ -33,10 +33,7 @@ const App = () => {
   const [moviesList, setMoviesList] = React.useState(JSON.parse(localStorage.getItem('films')) || []);
   const [showMoviesList, setShowMoviesList] = React.useState(JSON.parse(localStorage.getItem('showFilms')) || []);
 
-  //  сохраненные фильмы
-  const [moviesListSaved, setMoviesListSaved] = React.useState(JSON.parse(localStorage.getItem('savedFilms')) || []);
-
-  //  короткометражки
+   //  короткометражки
   const [isShort, setIsShort] = React.useState((localStorage.getItem('isShort') === 'true') || false);
   const [isShortSaved, setIsShortSaved] = React.useState((localStorage.getItem('isShortSaved') === 'true') || false);
   const [currentUser, setCurrentUser] = React.useState({});
@@ -112,42 +109,6 @@ const App = () => {
       setShowMoviesList(filterMovies);
       localStorage.setItem('showFilms', JSON.stringify(filterMovies));
      }
-    if (location.pathname === '/saved-movies') {
-      setIsShortSaved(!isShortSaved);
-      localStorage.setItem('isShortSaved', (!isShortSaved).toString());
-    }
-  }
-
-  const isLiked = (card) => {
-    return moviesListSaved?.some(i => {
-      return i.movieId === card.id ;
-    });
-  }
-
-  const handleAddLike = (movie) => {
-    mainApi.addLike(movie)
-      .then((res) => {
-        setMoviesListSaved([...moviesListSaved, res]);
-        localStorage.setItem('savedFilms', JSON.stringify([...moviesListSaved, res]));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }
-
-  const handleDelLike = (movie) => {
-    const getIdByMovieId = (movieId) => {
-      const id = moviesListSaved?.find((elem) => elem.movieId === movieId)?._id;
-      return id;
-    }
-    mainApi.delLike(getIdByMovieId(movie.id) ?? movie._id)
-      .then((res) => {
-        setMoviesListSaved(moviesListSaved.filter((elem) => elem._id !== res._id))
-        localStorage.setItem('savedFilms', JSON.stringify(moviesListSaved.filter((elem) => elem._id !== res._id)));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
   }
 
   const handleLogout = () => {
@@ -188,14 +149,10 @@ const App = () => {
                   function movies() {
                     return (
                       <Movies
-                        moviesListSaved={moviesListSaved}
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
                         isShort={isShort}
-                        isLiked={isLiked}
                         onClickIsShort={handleToggleIsShort}
-                        onAddLike={handleAddLike}
-                        onDelLike={handleDelLike}
                         currIndex={currIndex}
                         setCurrIndex={setCurrIndex}
                         minutesToNormalTime={minutesToNormalTime}
@@ -219,13 +176,10 @@ const App = () => {
                   function savedMovies() {
                     return (
                       <SavedMovies
-                        setMoviesListSaved={setMoviesListSaved}
-                        moviesListSaved={moviesListSaved}
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
                         isShortSaved={isShortSaved}
                         onClickIsShort={handleToggleIsShort}
-                        onDelLike={handleDelLike}
                         minutesToNormalTime={minutesToNormalTime}
                       />
                     )

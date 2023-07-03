@@ -22,6 +22,7 @@ const MoviesCard = (props) => {
         isLiked={props.isLiked}
         onDelLike={props.onDelLike}
         onAddLike={props.onAddLike}
+        isSaved={props.isSaved}
       >
       </Like>
     </li>

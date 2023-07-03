@@ -64,6 +64,7 @@ const Movies = (props) => {
         handleGetMovies={handleGetMovies}
         onClickIsShort={props.onClickIsShort}
         isShort={props.isShort}
+        handleGetSavedMovies={props.handleGetSavedMovies}
       />
       <MoviesCardList
         isShort={props.isShort}
@@ -80,6 +81,7 @@ const Movies = (props) => {
         minutesToNormalTime={props.minutesToNormalTime}
         showMoviesList={props.showMoviesList}
         setShowMoviesList={props.setShowMoviesList}
+        isSaved={false}
       />
       {
         isLoading &&

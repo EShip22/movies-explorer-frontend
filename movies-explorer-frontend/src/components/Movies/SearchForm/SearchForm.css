@@ -11,6 +11,7 @@
 .search-form__error {
   color: #EE3465;
   font-size: 12px;
+  min-height: 36px;
 }
 .search-column {
   display: flex;

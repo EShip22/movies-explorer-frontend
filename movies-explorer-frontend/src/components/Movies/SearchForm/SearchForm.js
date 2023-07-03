@@ -7,28 +7,43 @@ const SearchForm = (props) => {
   
   //  введенный текст поиска. сохраняю только после сабмита  
   const [inputSearchStr, setInputSearchStr] = React.useState(localStorage.getItem('searchValue') ?? '');
-  const [inputSearchStrSaved, setInputSearchStrSaved] = React.useState(localStorage.getItem('searchValueSaved'));
+  const [inputSearchStrSaved, setInputSearchStrSaved] = React.useState(localStorage.getItem('searchValueSaved') ?? '');
   const [searchError, setSearchError] = React.useState("");
+
+  const [isShortSaved, setIsShortSaved] = React.useState(false);
+
 
   const location = useLocation();
 
   React.useEffect(() => {
-    if ( location.pathname === '/movies') {
-      if ( inputSearchStr.length === 0 ) {
-        setSearchError('введите текст для поиска');
-      } else {
-        setSearchError('');
-      }
-    } 
+    if ( location.pathname === '/movies' && inputSearchStr.length > 0) {
+      setSearchError('');
+    }
   }, [inputSearchStr]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (inputSearchStr.length === 0 && location.pathname === '/movies') {
+      setSearchError('введите текст для поиска')
+      return ;
+    }
     if (props.isSavedFilms) {
-      props.handleGetMovies(inputSearchStrSaved);
+      props.handleGetSavedMovies(inputSearchStrSaved);
     } else {
       props.handleGetMovies(inputSearchStr);
     }
+  }
+
+  const handleToggleIsShortSaved = () => {
+    setIsShortSaved(!isShortSaved);
+    localStorage.setItem('isShortSaved',!isShortSaved);
+    const showMovies = props.savedFilms?.filter((elem) => {
+      return (
+        !isShortSaved ? elem.duration <= 40 : true
+      )
+    })
+
+    props.setSavedFilmsShow(showMovies);
   }
 
   return (
@@ -60,7 +75,7 @@ const SearchForm = (props) => {
             }
             <button
               className={
-                `search-container__button ${inputSearchStr.length === 0 ? `search-container__button_diabled` : ''}`
+                `search-container__button`
               }
             >
               <img alt="поиск" src={find} className={`search-container__img`}></img>
@@ -96,7 +111,7 @@ const SearchForm = (props) => {
             <input
               className="short-films-container__checkbox"
               type="checkbox"
-              checked={props.isShortSaved}
+              checked={isShortSaved}
               id="shortFilms"
               name="shortFilms"
               onChange={()=>{}}
@@ -105,7 +120,7 @@ const SearchForm = (props) => {
             <label
               className="short-films-container__text"
               htmlFor="shortFilms"
-              onClick={props.onClickIsShort}
+              onClick={handleToggleIsShortSaved}
             >
               Короткометражки
             </label>
